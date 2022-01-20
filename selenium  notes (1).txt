@@ -1,0 +1,276 @@
+///  Browser opening commands        
+  System.setProperty("webdriver.chrome.driver","C:\\chromedriver_win32\\chromedriver.exe"); ---//driver instructions
+driver =new ChromeDriver(); //////new browser  opening
+driver.manage().window().maximize() ;	/////browser maximize
+driver.get("https://opensource-demo.orangehrmlive.com/");    ////browser name    
+--------------------------------------------------                     
+         2..Webelement inspect
+driver.findElement(By.name("txtUsername")).sendKeys("Admin");  
+driver.findElement(By.name("txtUsername")).click();             
+3......Static and Non static::::
+Nonstatic::Create object for class;;
+TC02_Login_NonStatic_Example TN1= new TC02_Login_NonStatic_Example();
+		TN1.OpenChromeBrowser();
+		TN1.OpenOrangeHRM();
+		TN1.Login();
+		TN1.AddNationality();
+Static:: no need object creation.. directy by class..
+
+
+                               TC02_Login_Static.OpenChromeBrowser();
+		TC02_Login_Static.OpenOrangeHRM();
+		TC02_Login_Static.Login();
+		TC02_Login_Static.AddNationality();
+		TC02_Login_Static.closeBrowser();
+-------------------------------------------
+Locators
+
+1. ID
+2. Name
+3. CSSSelector
+4. xpath
+5. linkText--If hyperlink text is Static(fixed value), linktext will be used.
+6.PartiallinkText==If hyperlink text is Dynami(value keeep on changing),,,hyper,linktext will be used.
+7.className
+8.TagName------------------>to find group of similar webelements, then we will use ..
+
+
+-----------------------------------------
+DROPDOWN----3types....
+
+1.import SELECT class;;
+syntax:::::::Select dropdown1(OBJECT) = new Select(driver.findElement(By.id("location_country")));-------
+		
+		dropdown1.selectByValue("IN");---------
+		
+		//dropdown1.selectByVisibleText("India");
+		
+		//dropdown1.selectByIndex(0);
+
+-----------------------------------------------
+JavaScript Executor
+
+1. We can launch new tab
+2. Scroll at particular web Element
+3. SendKeys
+4. Click
+5. Highlight a web Element border...
+
+EXAMPLE::;
+      WebElement button =findElement(By.id("btnLogin")); -Creating webelement object reference name
+      JavascriptExecutor js = (JavascriptExecutor)driver;	Creating object for class
+       js.executeScript("arguments[0].setAttribute('value','Admin')", username);
+
+
+
+1. ((JavascriptExecutor)driver).executeScript("window.open()");
+
+2. js.executeScript("arguments[0].scrollIntoView();", Connect_with_Us);
+
+3. js.executeScript("arguments[0].setAttribute('value','admin123')", Password);
+
+4. js.executeScript("arguments[0].click();", LoginButton);
+
+5. js.executeScript("arguments[0].style.border='3px solid red'", UserName);
+
+-----------------------------------------------
+Actions Class
+
+1. Mouse Hover action
+2. Double click
+3. Right CLick
+4. Drag and drop
+
+ACTIONS....class to be import
+Actions actions1 = new Actions(driver);                          
+3 steps for actions;;;
+1.importing action class;;
+2.creating webelement object reference  name
+3. object for  actions class;
+down......,.,.,><><
+1. actions.moveToElement(Users).click().build().perform();
+2. actions.doubleClick(Copy_Text_Button).perform();
+3. actions.contextClick(RButton).perform();
+4. actions.dragAndDrop(Source_Drag_Button, Target_Drag_Button).perform();
+----------------------------------------------------------------------------------------------
+DATA PROVIDER::: in parameteriazation location have to give this systanxes...
+@DataProvider(name="Orange158")                                                                                3 steps for data provider::::1. copying dataprovider sytax..
+                                                                                                                                                                                        2.connect with dataprovider;
+     	                                                                                                                                                                        3.write string variables in methods.
+    	 public Object[] myDataProvider() {
+    	      
+    	     Object data[][]=  new Object[3][6];
+------------------------------------------------------
+   DATA FETCHING FROM EXCEL:::::::::::: 		 
+get tablearray is non static method in excelapitest used to fetch data from excel;;;excleutil package having excelapitest4
+creating object for class excelapitest4 ..
+ExcelApiTest4 eat = new ExcelApiTest4();
+   		Object[][] testObjArray = eat.getTableArray("C://HTML Report//OrangeHRM6//TC01_Jobs123.xlsx", "Sheet1");
+   		System.out.println(testObjArray.length);
+   		return (testObjArray);
+import Day_034_TestNG_Listeners.TestBrowser;
+import ExcelUtil.ExcelApiTest4;
+-----------------------------------------------------------------------
+excelapitest 4 class shall be imported.....
+@DataProvider(name = "Orange158")
+   	  public static Object[][] Test1() throws Exception {
+   	 
+   		ExcelApiTest4 eat = new ExcelApiTest4();
+   		Object[][] testObjArray = eat.getTableArray("C://HTML Report//OrangeHRM6//TC01_Jobs123.xlsx", "Sheet1");
+   		System.out.println(testObjArray.length);
+   		return (testObjArray);
+   		
+   	  }
+
+   @Test(dataProvider="Orange158")
+
+---------------------------------------------------------------
+Browser compatability testing................
+testbrowser jave file to be tested after execute then browser compatability testing
+
+if(Browser.equalsIgnoreCase("Chrome"))
+	  {
+		  driver = TestBrowser.OpenChromeBrowser();
+	  }
+	  
+	  if(Browser.equalsIgnoreCase("Firefox"))
+	  {
+		  driver = TestBrowser.OpenfirefoxBrowser();
+		  Thread.sleep(10000);
+   --------------------------------------------------------------------------
+Emailable reports::::under every driver instruction need to write ><<
+1.@test,,,,,Reporter.log("Pass- login");
+2.@beforetest,@aftertest..refer ram emailable reports;;
+3.Testng paremetres.....@Parameters({"Browser1"})
+eg::::static WebDriver driver;
+	
+	@Parameters({"Browser1"})
+	@BeforeTest
+<parameter name="Browser1" value="Chrome"/>  in xml file......
+
+
+--------------------------------------------
+Testng.xml<>Suite<><>Test<>classes<><methods<><>
+Collection of classes is methods
+------------------------------------------------------------------
+Parellel methods:::
+putting another method in  class file.....whch is  already having 1 method...eg::adding public void after finish another method (public void)
+execute and in xml file:: put 2 as thread
+and no  select methods in xml settings..
+refer z27_parellel_methods. pgm...
+or...
+in xml file settings:::
+6 as thread..or 1or2
+dont touch in suite cms methods
+selecting methods
+in xml file settings:::
+or 6 as  thread........remove and  select methods
+...
+----------------------------------------------------------------------
+Parellel Classes::
+means classfile.java .
+number of classes in project ..
+after click on package and create xml file..with classes and thread count 2.
+----------------------------------------------------------------
+Parellel Tests::
+same like Parellel classes file changes in xml file only...
+in parellel classes ,, 2 classes were executed in 1 text block..and giving same name..
+in Parellel tests,, 2 texts block were created for 2 test classes....and  giving seperate name for test...''refer parellel tests...
+Suite contain 2 test blocks....
+***** to integrate test cases--- parellel tests and parellel  methods..
+******integrating test cases by testng.xml..
+how to generate testng.xml batch file... ...by 3 ways.. parellel classes ,, methods,tests... 
+--------------------------------------------------------------------------
+how to generate emailable report:::
+for testng class we haveto report t4estng .xml..emailable report will be  generated in  testoutput..
+--------------------------------------------
+Customizable emailable report::
+to write log stmt we have to import reportor class...
+for Customizable emailable report:  refer ram customizable reports..
+importing reporter1 class...
+write 
+driver = TestBrowser.OpenChromeBrowser();
+		
+		String str= "TC01_Login";
+		R1= new Reporter1(driver,str);	
+		
+		String TestURL = "https://opensource-demo.orangehrmlive.com/";
+		
+		driver.get(TestURL);
+		R1.TakeScreenShotAuto(driver,"Opened Orange HRM","Pass");
+R1.TakeScreenShotAuto(driver,"Username Entered","Pass");............
+for changing logo::
+
+in reporter1 java file press ctrl F, and type logo?/
+rename desired  logo as logo ??
+change other logos name as logo1
+-----------------------------------------------------------------
+Page object model:::
+During runtime, webelement is indentifying and peforming the operation..parellely,,.
+
+Pagefactory::
+Before executing the methods ,,,1st verify the allwebelements  then  only proceeding for action.1st all webelements all available then it perform the operation..
+using @findBy@FindBy(id="txtUsername")
+		  WebElement Username;
+
+----------------------------------------------------------------------------------------------
+Tesng paramteres:::
+@Parameters({"Browser1","UserName1","Password1","Nationality1"})----below webdriver driver;
+in testng.xml file <parameter name="Browser" value="Chrome"/> 
+
+   ---------------------------------------------------
+
+Waits.......Synchronization issue////dynamic waits :::: implicit ,,explicit and fluent wait...
+  
+1. Implicit Wait  -- Global Rule for all the web Elements///if webelement is not available and not loading on webpage,,driver can wait  for  maximum 10 seconds..
+
+driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+
+2. Explicit Wait - applicatble for a specific WebElement///// driver can wait to handle the webelement more than 10 seconds----use explicit if webelement is loading more than 10 seconds, driver can  wait 
+
+WebDriverWait wait=  new WebDriverWait(driver,60);
+wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Logout"))) ;
+3. Fluent wait - - applicatble for a specific WebElement
+4. Thread.sleep(5000);
+....******************1.. what is  synchrnization in selenium::
+whenver set of webelements are not loading or loading slowly,,driver has to synchronize and wait until the webelement is loading...ater it will perform required click operation..
+2.what is waits and types.
+..3..how do u manage synchrnization in selenium;;;
+1.implicit wait:: is a global rule applicable to all webelements ,, wherever webelenis habing performance iseu, drjver wwil lwait as per implicit time specify...
+thread.sleep():::executon shall pass for 10 seconds,,click operation shall perform....we can use but n ot preferrable,,multiple places need to write and execution time waste//...
+
+
+priority order:::starting from - to +,,,,,, ...@Test(priority=1)
+if priorities same it will check the method name in alphabetical order::
+-----------------------------------------------------------------------------------
+Frames can be handeletd in 3 ways
+
+1. Switch into frame by Index
+List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+System.out.println("Numnber of frames: " + frames.size());
+driver.switchTo().frame(frames.get(0));
+driver.switchTo().defaultContent();
+driver.switchTo().frame(frames.get(1));
+driver.switchTo().defaultContent();
+2. Switch into frame by name 
+driver.switchTo().frame("Google_ContactForm");
+3. Switch into frame by webelement reference
+driver.switchTo().frame(driver.findElement(By.id("GoogleContactForm")));
+
+-----------------------------------------------
+ 
+multiple windows:
+	
+ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+
+driver.switchTo().window(tabs.get(0));
+
+driver.switchTo().window(tabs.get(1));
+-------------------------------------------------------
+GITHUB::::::
+1.....create remote repository::
+Sarma!ksra!555-passsword//////,,sharmaksra-id...
+https://github.com/sharmaksra/Ram_Test1.git
+git config --global user.email "coolsarmaksra@gmail.com"
+  git config --global user.name "sharmaksra"
