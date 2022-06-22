@@ -1,4 +1,4 @@
-///  Browser opening commands        
+/////////////////////ooooo///  Browser opening commands        
   System.setProperty("webdriver.chrome.driver","C:\\chromedriver_win32\\chromedriver.exe"); ---//driver instructions
 driver =new ChromeDriver(); //////new browser  opening
 driver.manage().window().maximize() ;	/////browser maximize
